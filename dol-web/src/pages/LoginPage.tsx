@@ -90,24 +90,15 @@ export default function LoginPage() {
       <header className="odl-site-header">
         <div className="odl-header-container">
           <Link to="/" className="odl-brand-logo-link" title="Dealer One Lane (DOL)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="180" height="44" viewBox="0 0 180 44" fill="none" className="odl-logo-svg">
-              <defs>
-                <linearGradient id="dolGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#ffffff"/>
-                  <stop offset="100%" stopColor="#f26522"/>
-                </linearGradient>
-              </defs>
-              <g transform="translate(2, 3)">
-                <rect x="0" y="0" width="48" height="38" rx="19" stroke="#ffffff" strokeWidth="3" fill="none" opacity="0.95"/>
-                <circle cx="19" cy="19" r="10" stroke="#f26522" strokeWidth="3" fill="none"/>
-                <circle cx="29" cy="19" r="10" stroke="#ffffff" strokeWidth="3" fill="none"/>
-                <path d="M19 12V26M29 12V26" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round"/>
-                <circle cx="24" cy="19" r="3" fill="#f26522"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="136" height="42" viewBox="0 0 136 42" fill="none" className="odl-logo-svg">
+              <g transform="translate(44, 2)">
+                <rect x="0" y="0" width="48" height="23" rx="11.5" stroke="#ffffff" strokeWidth="2.2" fill="none" />
+                <circle cx="14" cy="11.5" r="7.5" stroke="#f26522" strokeWidth="2.2" fill="none" />
+                <circle cx="34" cy="11.5" r="7.5" stroke="#ffffff" strokeWidth="2.2" fill="none" />
+                <text x="14" y="15.5" fill="#f26522" fontFamily="'Outfit', sans-serif" fontWeight="900" fontSize="10" textAnchor="middle">1</text>
+                <text x="34" y="15.5" fill="#ffffff" fontFamily="'Outfit', sans-serif" fontWeight="900" fontSize="9.5" textAnchor="middle">DOL</text>
               </g>
-              <g transform="translate(58, 8)">
-                <text x="0" y="16" fill="#ffffff" fontFamily="'Outfit', sans-serif" fontWeight="900" fontSize="18" letterSpacing="1.5">DOL</text>
-                <text x="0" y="27" fill="#cbd5e1" fontFamily="'Outfit', sans-serif" fontWeight="700" fontSize="7.5" letterSpacing="2.4">DEALER ONE LANE</text>
-              </g>
+              <text x="68" y="36" fill="#ffffff" fontFamily="'Outfit', sans-serif" fontWeight="800" fontSize="7.8" letterSpacing="2.6" textAnchor="middle">DEALER ONE LANE</text>
             </svg>
           </Link>
 
@@ -167,7 +158,9 @@ export default function LoginPage() {
               title="Call Us (877) 421-0135"
               onClick={() => showSuccessToast("Support Desk: (877) 421-0135 • Available 24/7")}
             >
-              <span className="phone-icon">📞</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" />
+              </svg>
             </button>
             <button 
               type="button" 
@@ -175,13 +168,6 @@ export default function LoginPage() {
               onClick={() => setIsTestimonialsModalOpen(true)}
             >
               Testimonials
-            </button>
-            <button 
-              type="button" 
-              className="odl-btn-glass-pill sm"
-              onClick={() => setIsAuthModalOpen(true)}
-            >
-              Sign In
             </button>
           </div>
         </div>
@@ -203,62 +189,49 @@ export default function LoginPage() {
             Unlock a new level of speed and efficiency without changing how your team works.
           </p>
 
-          {/* Action Button Row */}
+          {/* Action Button Row - Only Book a Demo */}
           <div className="odl-center-cta-row">
             <button
               type="button"
-              className="odl-btn-coral-pill lg glow-shadow"
-              onClick={() => setIsDemoModalOpen(true)}
-            >
-              Book a Demo
-            </button>
-            <button
-              type="button"
-              className="odl-btn-glass-pill lg"
+              className="odl-btn-coral-pill lg"
               onClick={() => setIsAuthModalOpen(true)}
             >
-              Launch Dealership OS
+              Book a Demo
             </button>
           </div>
 
           {/* ── Visual Mindmap / Stages Infographic ── */}
           <div className="odl-mindmap-stage-wrapper">
-            {/* SVG Curved Connector Tracks linking center card to the 4 nodes */}
-            <svg className="odl-connectors-svg" viewBox="0 0 1000 360" fill="none" preserveAspectRatio="xMidYMid meet">
-              <defs>
-                <linearGradient id="connectorGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.6" />
-                  <stop offset="50%" stopColor="#f26522" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#c084fc" stopOpacity="0.6" />
-                </linearGradient>
-              </defs>
-
-              {/* Left Branch to Inventory (Top Left) */}
+            {/* SVG Solid Curved Connector Tracks linking center card to the 4 nodes */}
+            <svg className="odl-connectors-svg" viewBox="0 0 1000 440" fill="none" preserveAspectRatio="xMidYMid meet">
+              {/* Left Branch - solid dark gray lines */}
               <path
-                d="M 440 240 C 370 240, 320 70, 240 70"
-                stroke="rgba(100, 116, 139, 0.45)"
-                strokeWidth="2.5"
-                strokeDasharray="4 2"
+                d="M 440 310 L 440 215 M 440 215 L 315 215 M 440 215 L 440 140 C 440 85, 430 75, 315 75"
+                stroke="#2a3348"
+                strokeWidth="2.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
-              {/* Left Branch to CRM (Bottom Left) */}
+              {/* Right Branch - solid dark gray lines */}
               <path
-                d="M 440 270 C 370 270, 320 200, 240 200"
-                stroke="rgba(100, 116, 139, 0.45)"
-                strokeWidth="2.5"
+                d="M 560 310 L 560 215 M 560 215 L 685 215 M 560 215 L 560 140 C 560 85, 570 75, 685 75"
+                stroke="#2a3348"
+                strokeWidth="2.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
-
-              {/* Right Branch to Credit & ID (Top Right) */}
+              {/* Bottom branching tracks peeking down */}
               <path
-                d="M 560 240 C 630 240, 680 70, 760 70"
-                stroke="rgba(100, 116, 139, 0.45)"
-                strokeWidth="2.5"
-                strokeDasharray="4 2"
+                d="M 440 380 L 440 425 C 440 440, 420 445, 315 445"
+                stroke="#222b3d"
+                strokeWidth="2.8"
+                strokeLinecap="round"
               />
-              {/* Right Branch to Lenders (Bottom Right) */}
               <path
-                d="M 560 270 C 630 270, 680 200, 760 200"
-                stroke="rgba(100, 116, 139, 0.45)"
-                strokeWidth="2.5"
+                d="M 560 380 L 560 425 C 560 440, 580 445, 685 445"
+                stroke="#222b3d"
+                strokeWidth="2.8"
+                strokeLinecap="round"
               />
             </svg>
 
@@ -271,11 +244,11 @@ export default function LoginPage() {
               }}
             >
               <div className="node-icon-box purple">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <rect x="3" y="3" width="8" height="8" rx="2" />
-                  <rect x="13" y="3" width="8" height="8" rx="2" />
-                  <rect x="3" y="13" width="8" height="8" rx="2" />
-                  <rect x="13" y="13" width="8" height="8" rx="2" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                  <rect x="3" y="3" width="7.5" height="7.5" rx="1.8" />
+                  <rect x="13.5" y="3" width="7.5" height="7.5" rx="1.8" />
+                  <rect x="3" y="13.5" width="7.5" height="7.5" rx="1.8" />
+                  <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.8" />
                 </svg>
               </div>
               <span className="node-label">Inventory</span>
@@ -290,10 +263,10 @@ export default function LoginPage() {
               }}
             >
               <div className="node-icon-box amber">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <rect x="4" y="10" width="4" height="10" rx="1" />
-                  <rect x="10" y="5" width="4" height="15" rx="1" />
-                  <rect x="16" y="2" width="4" height="18" rx="1" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                  <rect x="4" y="13" width="4" height="8" rx="1.5" />
+                  <rect x="10" y="8" width="4" height="13" rx="1.5" />
+                  <rect x="16" y="3" width="4" height="18" rx="1.5" />
                 </svg>
               </div>
               <span className="node-label">CRM</span>
@@ -316,9 +289,10 @@ export default function LoginPage() {
               }}
             >
               <div className="node-icon-box purple">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <rect x="3" y="6" width="18" height="15" rx="3" />
-                  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" strokeWidth="2" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                  <path d="M4 8C4 6.89543 4.89543 6 6 6H18C19.1046 6 20 6.89543 20 8V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 18.1046 4 18V8Z" />
+                  <path d="M9 6V4.5C9 3.67157 9.67157 3 10.5 3H13.5C14.3284 3 15 3.67157 15 4.5V6" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                  <rect x="10" y="11" width="4" height="3" rx="0.5" fill="#a855f7" />
                 </svg>
               </div>
               <span className="node-label">Credit &amp;ID</span>
@@ -333,12 +307,35 @@ export default function LoginPage() {
               }}
             >
               <div className="node-icon-box amber">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <circle cx="12" cy="7" r="4" />
-                  <path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                  <circle cx="16" cy="6" r="3.5" fill="white" />
+                  <text x="16" y="8.5" fill="#f59e0b" fontSize="7" fontWeight="900" textAnchor="middle">$</text>
+                  <path d="M3 16C3 15 4 14 6 14H11L14.5 16H19V19H14L11 17.5H6C4.5 17.5 3 18 3 19V16Z" fill="white" />
                 </svg>
               </div>
               <span className="node-label">Lenders</span>
+            </div>
+
+            {/* Subtle peeking lower nodes */}
+            <div className="odl-node-pill left-bottom-peek teal-glow">
+              <div className="node-icon-box teal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" />
+                  <path d="M2 17L12 22L22 17" stroke="white" strokeWidth="2" />
+                  <path d="M2 12L12 17L22 12" stroke="white" strokeWidth="2" />
+                </svg>
+              </div>
+              <span className="node-label">DMS Sync</span>
+            </div>
+
+            <div className="odl-node-pill right-bottom-peek teal-glow">
+              <div className="node-icon-box teal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" />
+                  <path d="M14 2v6h6" fill="#06b6d4" />
+                </svg>
+              </div>
+              <span className="node-label">eContracting</span>
             </div>
           </div>
         </section>
