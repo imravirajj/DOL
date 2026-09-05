@@ -115,4 +115,17 @@ public class VehicleStock : AuditableEntity, IBranchScoped
             UpdatedAt = DateTime.UtcNow;
         }
     }
+
+    public void UpdateDetails(string color, string engineNumber)
+    {
+        Color = color.Trim();
+        EngineNumber = engineNumber.Trim().ToUpperInvariant();
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void SetStatus(VehicleStockStatus status)
+    {
+        Status = status;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }

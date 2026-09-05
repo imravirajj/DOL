@@ -38,4 +38,20 @@ public class VehicleVariant : AuditableEntity, ITenantScoped
         ColorsAvailable = colorsAvailable.Trim();
         IsActive = true;
     }
+
+    public void UpdateDetails(string variantName, string fuelType, string transmission, decimal exShowroomPrice, string colorsAvailable)
+    {
+        VariantName = variantName.Trim();
+        FuelType = fuelType.Trim();
+        Transmission = transmission.Trim();
+        ExShowroomPrice = exShowroomPrice;
+        ColorsAvailable = colorsAvailable.Trim();
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void SetActiveStatus(bool isActive)
+    {
+        IsActive = isActive;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }

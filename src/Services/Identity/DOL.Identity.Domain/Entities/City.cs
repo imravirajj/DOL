@@ -21,4 +21,9 @@ public class City : BaseEntity, ITenantScoped
         StateRegionId = stateRegionId;
         Name = name.Trim();
     }
+
+    public void Update(string name)
+    {
+        Name = name.Trim();
+    }
 }

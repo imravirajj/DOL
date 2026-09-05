@@ -20,4 +20,10 @@ public class RtoTaxSlab : BaseEntity, ITenantScoped
         TaxPercentage = taxPercentage;
         CessPercentage = cessPercentage;
     }
+
+    public void Update(decimal taxPercentage, decimal cessPercentage)
+    {
+        TaxPercentage = taxPercentage;
+        CessPercentage = cessPercentage;
+    }
 }

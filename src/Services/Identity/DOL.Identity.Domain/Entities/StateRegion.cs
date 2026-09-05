@@ -23,4 +23,10 @@ public class StateRegion : BaseEntity, ITenantScoped
         Name = name.Trim();
         StateCode = stateCode?.Trim().ToUpperInvariant();
     }
+
+    public void Update(string name, string? stateCode)
+    {
+        Name = name.Trim();
+        StateCode = stateCode?.Trim().ToUpperInvariant();
+    }
 }

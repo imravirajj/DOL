@@ -1,3 +1,4 @@
+using DOL.Identity.Application.Commands.Inventory;
 using DOL.Identity.Application.DTOs;
 using DOL.Identity.Application.Interfaces;
 using DOL.Identity.Application.Queries.Inventory;
@@ -56,6 +57,50 @@ public class InventoryController : ApiControllerBase
             .ToListAsync();
 
         return Ok(list);
+    }
+
+    /// <summary>
+    /// Retrieves a single vehicle stock unit by ID.
+    /// </summary>
+    [HttpGet("stock/{id:guid}")]
+    public async Task<IActionResult> GetStockById(Guid id)
+    {
+        var result = await Mediator.Send(new GetVehicleStockByIdQuery(id));
+        return HandleResult(result);
+    }
+
+    /// <summary>
+    /// Inwards a new vehicle unit into inventory with unique 17-character VIN.
+    /// </summary>
+    [HttpPost("stock")]
+    [Authorize(Roles = "Admin,CompanyAdmin,BranchManager")]
+    public async Task<IActionResult> AddStock([FromBody] AddVehicleStockCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return HandleResult(result);
+    }
+
+    /// <summary>
+    /// Updates stock details (color, engine number, or operational status).
+    /// </summary>
+    [HttpPut("stock/{id:guid}")]
+    [Authorize(Roles = "Admin,CompanyAdmin,BranchManager")]
+    public async Task<IActionResult> UpdateStock(Guid id, [FromBody] UpdateVehicleStockCommand command)
+    {
+        if (id != command.Id) return BadRequest(new { errors = new[] { "Route ID does not match body ID." } });
+        var result = await Mediator.Send(command);
+        return HandleResult(result);
+    }
+
+    /// <summary>
+    /// Removes a defective or returned vehicle unit from stock.
+    /// </summary>
+    [HttpDelete("stock/{id:guid}")]
+    [Authorize(Roles = "Admin,CompanyAdmin")]
+    public async Task<IActionResult> DeleteStock(Guid id)
+    {
+        var result = await Mediator.Send(new DeleteVehicleStockCommand(id));
+        return HandleResult(result);
     }
 
     /// <summary>

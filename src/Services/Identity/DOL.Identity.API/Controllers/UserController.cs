@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using DOL.Identity.Application.Commands.AssignRole;
+using DOL.Identity.Application.Commands.Users;
 using DOL.Identity.Application.Queries.GetAllUsers;
 using DOL.Identity.Application.Queries.GetUserProfile;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +29,31 @@ public class UserController : ApiControllerBase
     public async Task<IActionResult> GetAllUsers([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         var result = await Mediator.Send(new GetAllUsersQuery(pageNumber, pageSize));
+        return HandleResult(result);
+    }
+
+    [HttpGet("{id:guid}")]
+    [Authorize(Roles = "Admin,CompanyAdmin,BranchManager")]
+    public async Task<IActionResult> GetUserById(Guid id)
+    {
+        var result = await Mediator.Send(new GetUserByIdQuery(id));
+        return HandleResult(result);
+    }
+
+    [HttpPut("{id:guid}")]
+    [Authorize(Roles = "Admin,CompanyAdmin,BranchManager")]
+    public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserCommand command)
+    {
+        if (id != command.Id) return BadRequest(new { errors = new[] { "Route ID does not match body ID." } });
+        var result = await Mediator.Send(command);
+        return HandleResult(result);
+    }
+
+    [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Admin,CompanyAdmin")]
+    public async Task<IActionResult> DeleteUser(Guid id)
+    {
+        var result = await Mediator.Send(new DeleteUserCommand(id));
         return HandleResult(result);
     }
 

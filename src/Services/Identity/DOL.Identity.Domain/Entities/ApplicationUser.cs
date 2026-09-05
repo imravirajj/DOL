@@ -157,4 +157,10 @@ public class ApplicationUser : AuditableEntity
         PasswordResetTokenExpiresAt = null;
         UpdatedAt = DateTime.UtcNow;
     }
+
+    public void SetStatus(UserStatus status)
+    {
+        Status = status;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }

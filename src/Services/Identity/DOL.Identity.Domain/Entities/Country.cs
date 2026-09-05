@@ -19,4 +19,10 @@ public class Country : BaseEntity, ITenantScoped
         Name = name.Trim();
         IsoCode = isoCode.Trim().ToUpperInvariant();
     }
+
+    public void Update(string name, string isoCode)
+    {
+        Name = name.Trim();
+        IsoCode = isoCode.Trim().ToUpperInvariant();
+    }
 }

@@ -30,4 +30,19 @@ public class VehicleModel : AuditableEntity, ITenantScoped
     {
         _variants.Add(variant);
     }
+
+    public void UpdateDetails(string make, string model, int year, string category)
+    {
+        Make = make.Trim();
+        Model = model.Trim();
+        Year = year;
+        Category = category.Trim();
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void SetActiveStatus(bool isActive)
+    {
+        IsActive = isActive;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }
