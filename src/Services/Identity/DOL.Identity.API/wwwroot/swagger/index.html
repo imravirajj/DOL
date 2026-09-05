@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>DOL Platform API Explorer</title>
+  <title>DealerOneLane</title>
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5.18.2/swagger-ui.css" />
   <link rel="icon" type="image/png" href="https://unpkg.com/swagger-ui-dist@5.18.2/favicon-32x32.png" sizes="32x32" />
   <style>
@@ -11,14 +12,19 @@
       overflow: -moz-scrollbars-vertical;
       overflow-y: scroll;
     }
-    *, *:before, *:after {
+
+    *,
+    *:before,
+    *:after {
       box-sizing: inherit;
     }
+
     body {
       margin: 0;
       background: #fafafa;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
+
     .topbar {
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       padding: 14px 24px;
@@ -28,6 +34,7 @@
       justify-content: space-between;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
+
     .topbar-brand {
       font-size: 1.25rem;
       font-weight: 700;
@@ -36,6 +43,7 @@
       align-items: center;
       gap: 8px;
     }
+
     .topbar-badge {
       font-size: 0.75rem;
       background: #3b82f6;
@@ -58,10 +66,19 @@
       min-width: 360px;
       animation: fadeInStats 0.35s ease-out;
     }
+
     @keyframes fadeInStats {
-      from { opacity: 0; transform: translateY(-4px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
     .stats-top {
       display: flex;
       align-items: center;
@@ -69,11 +86,13 @@
       margin-bottom: 10px;
       gap: 16px;
     }
+
     .stats-main {
       display: flex;
       align-items: center;
       gap: 8px;
     }
+
     .live-pulse {
       width: 9px;
       height: 9px;
@@ -83,11 +102,24 @@
       box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
       animation: liveGlow 2s infinite;
     }
+
     @keyframes liveGlow {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+      }
+
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
     }
+
     .stats-title {
       font-size: 0.75rem;
       font-weight: 700;
@@ -95,6 +127,7 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
+
     .stats-total {
       font-size: 1.1rem;
       font-weight: 800;
@@ -104,6 +137,7 @@
       border-radius: 9999px;
       border: 1px solid #bae6fd;
     }
+
     .stats-modules {
       font-size: 0.8rem;
       font-weight: 600;
@@ -113,12 +147,14 @@
       border-radius: 6px;
       border: 1px solid #e2e8f0;
     }
+
     .stats-methods {
       display: flex;
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
     }
+
     .badge-method {
       font-size: 0.75rem;
       font-weight: 600;
@@ -128,12 +164,33 @@
       align-items: center;
       gap: 4px;
     }
-    .badge-post { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-    .badge-get { background: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
-    .badge-put { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-    .badge-delete { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+    .badge-post {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-get {
+      background: #e0f2fe;
+      color: #075985;
+      border: 1px solid #bae6fd;
+    }
+
+    .badge-put {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .badge-delete {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
   </style>
 </head>
+
 <body>
   <div class="topbar">
     <div class="topbar-brand">
@@ -226,7 +283,7 @@
       }
     }
 
-    window.onload = function() {
+    window.onload = function () {
       window.ui = SwaggerUIBundle({
         url: "/swagger/v1.0.1/swagger.json",
         dom_id: '#swagger-ui',
@@ -246,4 +303,5 @@
     };
   </script>
 </body>
+
 </html>
