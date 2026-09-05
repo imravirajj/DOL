@@ -1,0 +1,52 @@
+## .NET
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.cache
+*.dbmdl
+*.jfm
+*.pfx
+*.publishsettings
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.nuget.props
+*.nuget.targets
+
+## IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+*~
+
+## OS
+.DS_Store
+Thumbs.db
+
+## User secrets
+secrets.json
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+
+## NuGet
+*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+## Migrations (keep tracked, but ignore designer if needed)
+
+## Logs
+*.log
+logs/
+.dol/

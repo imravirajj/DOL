@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DOL.Gateway/DOL.Gateway.csproj" />
+    <Project Path="src/DOL.SharedKernel/DOL.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/Identity/">
+    <Project Path="src/Services/Identity/DOL.Identity.API/DOL.Identity.API.csproj" />
+    <Project Path="src/Services/Identity/DOL.Identity.Application/DOL.Identity.Application.csproj" />
+    <Project Path="src/Services/Identity/DOL.Identity.Domain/DOL.Identity.Domain.csproj" />
+    <Project Path="src/Services/Identity/DOL.Identity.Infrastructure/DOL.Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DOL.Identity.UnitTests/DOL.Identity.UnitTests.csproj" />
+  </Folder>
+</Solution>
