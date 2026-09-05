@@ -27,6 +27,10 @@ public class IdentityDbContext : DbContext, IIdentityDbContext
     public DbSet<WaitlistEntry> WaitlistEntries => Set<WaitlistEntry>();
     public DbSet<Quotation> Quotations => Set<Quotation>();
     public DbSet<RtoTaxSlab> RtoTaxSlabs => Set<RtoTaxSlab>();
+    public DbSet<LoanApplication> LoanApplications => Set<LoanApplication>();
+    public DbSet<VehicleOrder> VehicleOrders => Set<VehicleOrder>();
+    public DbSet<TestDriveBooking> TestDriveBookings => Set<TestDriveBooking>();
+    public DbSet<DeliveryInspection> DeliveryInspections => Set<DeliveryInspection>();
 
     public IdentityDbContext(DbContextOptions<IdentityDbContext> options, ICurrentUserContext? currentUserContext = null)
         : base(options)
@@ -165,6 +169,69 @@ public class IdentityDbContext : DbContext, IIdentityDbContext
             !_currentUserContext.IsAuthenticated ||
             _currentUserContext.IsGlobalAdmin ||
             r.CompanyId == _currentUserContext.CompanyId
+        );
+
+        // 8. Loan Application Isolation:
+        modelBuilder.Entity<LoanApplication>().HasQueryFilter(l =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                l.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    l.BuyerId == _currentUserContext.UserId ||
+                    l.BranchId == _currentUserContext.BranchId
+                )
+            )
+        );
+
+        // 9. Vehicle Order Isolation:
+        modelBuilder.Entity<VehicleOrder>().HasQueryFilter(o =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                o.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    o.BuyerId == _currentUserContext.UserId ||
+                    o.BranchId == _currentUserContext.BranchId
+                )
+            )
+        );
+
+        // 10. Test Drive Booking Isolation:
+        modelBuilder.Entity<TestDriveBooking>().HasQueryFilter(t =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                t.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    t.BuyerId == _currentUserContext.UserId ||
+                    t.BranchId == _currentUserContext.BranchId
+                )
+            )
+        );
+
+        // 11. Delivery Inspection Isolation:
+        modelBuilder.Entity<DeliveryInspection>().HasQueryFilter(d =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                d.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    d.BranchId == _currentUserContext.BranchId
+                )
+            )
         );
     }
 }

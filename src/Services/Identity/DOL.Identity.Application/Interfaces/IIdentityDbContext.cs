@@ -21,4 +21,8 @@ public interface IIdentityDbContext : IUnitOfWork
     DbSet<WaitlistEntry> WaitlistEntries { get; }
     DbSet<Quotation> Quotations { get; }
     DbSet<RtoTaxSlab> RtoTaxSlabs { get; }
+    DbSet<LoanApplication> LoanApplications { get; }
+    DbSet<VehicleOrder> VehicleOrders { get; }
+    DbSet<TestDriveBooking> TestDriveBookings { get; }
+    DbSet<DeliveryInspection> DeliveryInspections { get; }
 }
