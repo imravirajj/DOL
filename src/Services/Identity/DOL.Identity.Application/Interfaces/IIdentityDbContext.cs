@@ -31,5 +31,12 @@ public interface IIdentityDbContext : IUnitOfWork
     DbSet<ServiceAppointment> ServiceAppointments { get; }
     DbSet<CustomerNotification> CustomerNotifications { get; }
     DbSet<DealershipReview> DealershipReviews { get; }
+    DbSet<PaymentTransaction> PaymentTransactions { get; }
+    DbSet<CustomerDocument> CustomerDocuments { get; }
+    DbSet<WarrantyPackage> WarrantyPackages { get; }
+    DbSet<VehicleWarrantySubscription> VehicleWarrantySubscriptions { get; }
+    DbSet<SalesLead> SalesLeads { get; }
+    DbSet<EvChargingStation> EvChargingStations { get; }
+    DbSet<HomeChargerInstallation> HomeChargerInstallations { get; }
 }
 

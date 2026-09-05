@@ -37,6 +37,13 @@ public class IdentityDbContext : DbContext, IIdentityDbContext
     public DbSet<ServiceAppointment> ServiceAppointments => Set<ServiceAppointment>();
     public DbSet<CustomerNotification> CustomerNotifications => Set<CustomerNotification>();
     public DbSet<DealershipReview> DealershipReviews => Set<DealershipReview>();
+    public DbSet<PaymentTransaction> PaymentTransactions => Set<PaymentTransaction>();
+    public DbSet<CustomerDocument> CustomerDocuments => Set<CustomerDocument>();
+    public DbSet<WarrantyPackage> WarrantyPackages => Set<WarrantyPackage>();
+    public DbSet<VehicleWarrantySubscription> VehicleWarrantySubscriptions => Set<VehicleWarrantySubscription>();
+    public DbSet<SalesLead> SalesLeads => Set<SalesLead>();
+    public DbSet<EvChargingStation> EvChargingStations => Set<EvChargingStation>();
+    public DbSet<HomeChargerInstallation> HomeChargerInstallations => Set<HomeChargerInstallation>();
 
     public IdentityDbContext(DbContextOptions<IdentityDbContext> options, ICurrentUserContext? currentUserContext = null)
 
@@ -318,6 +325,103 @@ public class IdentityDbContext : DbContext, IIdentityDbContext
             !_currentUserContext.IsAuthenticated ||
             _currentUserContext.IsGlobalAdmin ||
             dr.CompanyId == _currentUserContext.CompanyId
+        );
+
+        // 18. Payment Transaction Isolation:
+        modelBuilder.Entity<PaymentTransaction>().HasQueryFilter(pt =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                pt.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    pt.BuyerId == _currentUserContext.UserId ||
+                    pt.BranchId == _currentUserContext.BranchId
+                )
+            )
+        );
+
+        // 19. Customer Document Isolation:
+        modelBuilder.Entity<CustomerDocument>().HasQueryFilter(cd =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                cd.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    _currentUserContext.Roles.Contains("BranchManager") ||
+                    _currentUserContext.Roles.Contains("SalesExecutive") ||
+                    cd.UserId == _currentUserContext.UserId
+                )
+            )
+        );
+
+        // 20. Warranty Package Isolation:
+        modelBuilder.Entity<WarrantyPackage>().HasQueryFilter(wp =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            wp.CompanyId == _currentUserContext.CompanyId
+        );
+
+        // 21. Vehicle Warranty Subscription Isolation:
+        modelBuilder.Entity<VehicleWarrantySubscription>().HasQueryFilter(ws =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                ws.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    ws.BuyerId == _currentUserContext.UserId ||
+                    ws.BranchId == _currentUserContext.BranchId
+                )
+            )
+        );
+
+        // 22. Sales Lead Isolation:
+        modelBuilder.Entity<SalesLead>().HasQueryFilter(sl =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                sl.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    sl.BranchId == _currentUserContext.BranchId ||
+                    sl.AssignedStaffId == _currentUserContext.UserId
+                )
+            )
+        );
+
+        // 23. EV Charging Station Isolation:
+        modelBuilder.Entity<EvChargingStation>().HasQueryFilter(ev =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            ev.CompanyId == _currentUserContext.CompanyId
+        );
+
+        // 24. Home Charger Installation Isolation:
+        modelBuilder.Entity<HomeChargerInstallation>().HasQueryFilter(hci =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                hci.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    hci.BuyerId == _currentUserContext.UserId ||
+                    hci.BranchId == _currentUserContext.BranchId
+                )
+            )
         );
     }
 }
