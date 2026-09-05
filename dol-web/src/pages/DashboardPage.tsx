@@ -81,56 +81,56 @@ export default function DashboardPage() {
         {/* Page Title & Context Header */}
         <div className="view-header-row">
           <div>
-            <span className="section-eyebrow">Enterprise Telematics • v1.0.1</span>
+            <span className="section-eyebrow">ONE DEALER LANE CONNECTED OPERATING SYSTEM • v1.0.1</span>
             <h1 className="view-title">Executive Operations Hub</h1>
             <p className="view-subtitle">
               Welcome back, <strong>{user?.fullName || "Staff Member"}</strong> ({primaryRole}).
-              Here is your multi-tenant showroom health and dealership pipeline.
+              Here is your multi-tenant showroom health and dealership pipeline across all operational lanes.
             </p>
           </div>
 
           <div className="view-actions-right">
             <Link to="/crm-sales" className="btn btn-primary">
-              + New Lead
+              ⚡ Sales Lane (+ Lead)
             </Link>
             <Link to="/orders" className="btn btn-secondary">
-              + New Booking
+              📑 Fast Lane (+ Booking)
             </Link>
           </div>
         </div>
 
         {/* ── Top Executive KPI Cards ── */}
         <section className="stats-kpi-grid">
-          <div className="kpi-card highlight-cyan">
+          <div className="kpi-card highlight-orange">
             <div className="kpi-top">
-              <span className="kpi-label">Active Quotations</span>
-              <span className="kpi-icon">📑</span>
+              <span className="kpi-label">Sales Lane • Active Quotes</span>
+              <span className="kpi-icon">🎯</span>
             </div>
             <strong className="kpi-value">{funnel.totalQuotations}</strong>
             <small className="kpi-subtext">Conversion: {funnel.leadToOrderConversionPct}% to order</small>
           </div>
 
-          <div className="kpi-card highlight-purple">
+          <div className="kpi-card highlight-cyan">
             <div className="kpi-top">
-              <span className="kpi-label">Open Vehicle Orders</span>
-              <span className="kpi-icon">🚗</span>
+              <span className="kpi-label">Fast Lane • Open Orders</span>
+              <span className="kpi-icon">📑</span>
             </div>
             <strong className="kpi-value">{funnel.totalOrders}</strong>
-            <small className="kpi-subtext">{funnel.completedDeliveries} completed deliveries</small>
+            <small className="kpi-subtext">{funnel.completedDeliveries} completed customer deliveries</small>
           </div>
 
           <div className="kpi-card highlight-green">
             <div className="kpi-top">
-              <span className="kpi-label">Yard Inventory</span>
-              <span className="kpi-icon">📍</span>
+              <span className="kpi-label">Stock Lane • Yard Inventory</span>
+              <span className="kpi-icon">🚗</span>
             </div>
             <strong className="kpi-value">{stockAging.totalVehiclesInStock} Units</strong>
             <small className="kpi-subtext">Valued at {formatCurrency(stockAging.totalYardInventoryValue)}</small>
           </div>
 
-          <div className="kpi-card highlight-orange">
+          <div className="kpi-card highlight-purple">
             <div className="kpi-top">
-              <span className="kpi-label">Total Booking Tokens</span>
+              <span className="kpi-label">Menu Lane • F&I Tokens</span>
               <span className="kpi-icon">💳</span>
             </div>
             <strong className="kpi-value">{formatCurrency(revenue.totalBookingAmountCollected)}</strong>
@@ -144,10 +144,10 @@ export default function DashboardPage() {
           <div className="panel-card">
             <div className="panel-card-header">
               <div>
-                <h3>Automotive Sales Pipeline</h3>
-                <p>Live progression from enquiry quotation to delivery ceremony.</p>
+                <h3>Sales Lane Conversion Pipeline</h3>
+                <p>Live progression from enquiry quotation to customer delivery ceremony.</p>
               </div>
-              <span className="badge badge-success">Live Sync</span>
+              <span className="live-stat-chip highlight">Live Telematics</span>
             </div>
 
             <div className="pipeline-bars-container">
@@ -163,7 +163,7 @@ export default function DashboardPage() {
 
               <div className="pipeline-stage-item">
                 <div className="stage-meta">
-                  <span>2. Confirmed Bookings</span>
+                  <span>2. Fast Lane Bookings</span>
                   <strong>{funnel.totalOrders} Bookings</strong>
                 </div>
                 <div className="progress-bar-bg">
@@ -173,7 +173,7 @@ export default function DashboardPage() {
 
               <div className="pipeline-stage-item">
                 <div className="stage-meta">
-                  <span>3. Bank Loan Underwriting</span>
+                  <span>3. Menu Lane Underwriting</span>
                   <strong>{funnel.pendingLoans} In-Review ({funnel.approvedLoans} Approved)</strong>
                 </div>
                 <div className="progress-bar-bg">
@@ -197,10 +197,10 @@ export default function DashboardPage() {
           <div className="panel-card">
             <div className="panel-card-header">
               <div>
-                <h3>Yard Stock Aging (VINs)</h3>
-                <p>Days vehicles have spent in showroom transit or staging yard.</p>
+                <h3>Stock Lane Aging & Velocity (VINs)</h3>
+                <p>Days vehicles have spent in transit or yard staging.</p>
               </div>
-              <span className="badge badge-info">316 Total Units</span>
+              <span className="live-stat-chip">316 Total Units</span>
             </div>
 
             <div className="stock-aging-grid">
@@ -231,7 +231,7 @@ export default function DashboardPage() {
 
             <div className="aging-footer-actions">
               <Link to="/inventory" className="text-link">
-                View All Yard VIN Locations &rarr;
+                View Stock Yard VIN Tracking &rarr;
               </Link>
             </div>
           </div>
@@ -241,47 +241,47 @@ export default function DashboardPage() {
         <div className="panel-card">
           <div className="panel-card-header">
             <div>
-              <h3>Enterprise Operational Modules (26 Integrated Endpoints)</h3>
-              <p>Direct navigation across your dealership cloud platform.</p>
+              <h3>Connected Dealership Lanes (26 Integrated Endpoints • 144 APIs)</h3>
+              <p>Direct navigation across your connected dealership cloud platform.</p>
             </div>
           </div>
 
           <div className="quick-access-modules-grid">
             <Link to="/crm-sales" className="quick-module-tile">
               <span className="tile-icon">🎯</span>
-              <strong>CRM & Leads</strong>
-              <span>Lead scoring (Hot/Warm), follow-up calls & quotations</span>
+              <strong>Sales Lane</strong>
+              <span>Lead conversion, desking, quotations & test drive schedules</span>
             </Link>
 
             <Link to="/inventory" className="quick-module-tile">
               <span className="tile-icon">🚗</span>
-              <strong>Catalog & Inventory</strong>
-              <span>Model variants, ex-showroom pricing & yard stock</span>
+              <strong>Stock & Yard Lane</strong>
+              <span>Model catalog trims, yard staging bays & VIN telemetry</span>
             </Link>
 
             <Link to="/orders" className="quick-module-tile">
               <span className="tile-icon">📑</span>
-              <strong>Orders & KYC Vault</strong>
-              <span>Pre-booking tokens, customer documents & approvals</span>
+              <strong>Fast Lane & Vault</strong>
+              <span>Instant digital bookings, KYC vault & contract signing</span>
             </Link>
 
             <Link to="/finance" className="quick-module-tile">
               <span className="tile-icon">💳</span>
-              <strong>Finance & Insurance</strong>
-              <span>Razorpay ledger, bank EMI applications & policy renewals</span>
+              <strong>Menu Lane (F&I)</strong>
+              <span>Payment ledger, loan underwriting & insurance menu</span>
             </Link>
 
             <Link to="/aftersales" className="quick-module-tile">
               <span className="tile-icon">🛠️</span>
-              <strong>Aftersales & Service</strong>
-              <span>Workshop appointments, accessories store & EV chargers</span>
+              <strong>Ops & Service Lane</strong>
+              <span>Workshop job cards, accessories store & EV chargers</span>
             </Link>
 
             {(isSuperAdmin || isCompanyAdmin) && (
               <Link to="/admin-setup" className="quick-module-tile highlight-admin">
                 <span className="tile-icon">🏢</span>
-                <strong>Admin & Masters</strong>
-                <span>Dealership groups, showrooms, branches & locations</span>
+                <strong>Enterprise Tenancy</strong>
+                <span>Dealership groups, showrooms, branches & RBAC security</span>
               </Link>
             )}
           </div>

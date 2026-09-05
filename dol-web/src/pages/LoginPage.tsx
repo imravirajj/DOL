@@ -66,21 +66,37 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page">
+      <div className="auth-page-glow-1" />
+      <div className="auth-page-glow-2" />
+
       <div className="auth-card auth-card-role-enhanced">
         <div className="auth-header">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span className="auth-eyebrow">DealerOneLane Enterprise</span>
-            <span style={{ fontSize: "11px", background: "#e0f2fe", color: "#0369a1", padding: "2px 8px", borderRadius: "12px", fontWeight: "600" }}>
+          <div className="odl-auth-brand-row">
+            <div className="brand-logo-icon">
+              <span className="brand-logo-glow" />
+              <span className="brand-logo-text">ODL</span>
+            </div>
+            <div className="odl-brand-title-wrap">
+              <span className="odl-brand-title">ONE DEALER LANE</span>
+              <span className="odl-brand-sub">ENTERPRISE AUTOMOTIVE CLOUD</span>
+            </div>
+            <span className="odl-version-badge">
+              <span className="pulse-dot" />
               v1.0.1 • 144 APIs
             </span>
           </div>
+
           <h1>Dealership Sign In</h1>
-          <p>Select your operational role below for instant demo login, or enter credentials.</p>
+          <p>Accelerating showroom performance, digital desking, and real-time inventory.</p>
         </div>
 
         {/* ── Role Preset Selection Bar ── */}
         <div className="role-preset-section">
-          <label className="role-preset-label">Quick Role Login (Click to Switch):</label>
+          <div className="role-preset-label-row">
+            <label className="role-preset-label">SELECT OPERATIONAL ROLE FOR INSTANT DEMO:</label>
+            <span className="role-preset-hint">5 Pre-configured Personas</span>
+          </div>
+
           <div className="role-preset-grid">
             {(Object.keys(ROLE_PRESETS) as PresetRole[]).map((key) => {
               const preset = ROLE_PRESETS[key];
@@ -91,13 +107,15 @@ export default function LoginPage() {
                   type="button"
                   onClick={() => handleRoleSelect(key)}
                   className={`role-preset-btn ${isSelected ? "active" : ""}`}
-                  style={{ borderColor: isSelected ? preset.color : undefined }}
                 >
-                  <span className="role-badge-pill" style={{ background: preset.color }}>
-                    {preset.badge.split(" ")[0]}
-                  </span>
+                  <div className="role-preset-header">
+                    <span className="role-badge-pill" style={{ background: preset.color }}>
+                      {preset.badge}
+                    </span>
+                    {isSelected && <span className="role-active-check">✓</span>}
+                  </div>
                   <div className="role-info">
-                    <strong style={{ color: isSelected ? preset.color : "#1e293b" }}>{preset.name}</strong>
+                    <strong>{preset.name}</strong>
                     <small>{preset.desc}</small>
                   </div>
                 </button>
@@ -110,9 +128,8 @@ export default function LoginPage() {
             className="quick-role-submit-btn"
             disabled={loading}
             onClick={() => handleQuickRoleLogin(selectedRole)}
-            style={{ background: ROLE_PRESETS[selectedRole].color }}
           >
-            {loading ? "Authenticating..." : `⚡ Instant One-Click Login as ${ROLE_PRESETS[selectedRole].badge}`}
+            {loading ? "Authenticating Session..." : `⚡ Instant One-Click Sign In as ${ROLE_PRESETS[selectedRole].badge}`}
           </button>
         </div>
 

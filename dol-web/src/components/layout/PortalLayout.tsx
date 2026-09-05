@@ -46,39 +46,62 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
     path: string;
     label: string;
     icon: string;
+    laneColor?: string;
     badge?: string;
     count?: string;
   }
 
   interface NavGroup {
     group: string;
+    laneTag?: string;
+    tagColor?: string;
     items: NavItem[];
   }
 
   const navGroups: NavGroup[] = [
     {
-      group: "Core Operations",
+      group: "Executive & Sales Lane",
+      laneTag: "SALES LANE",
+      tagColor: "#f26522",
       items: [
-        { path: "/dashboard", label: "Analytics & Executive", icon: "📊", badge: "Live" },
-        { path: "/crm-sales", label: "Sales & CRM Pipeline", icon: "🎯", count: "128" },
-        { path: "/inventory", label: "Catalog & Yard Stock", icon: "🚗", count: "316" },
-        { path: "/orders", label: "Orders & KYC Vault", icon: "📑", count: "42" },
+        { path: "/dashboard", label: "Executive Analytics", icon: "⚡", badge: "Live", laneColor: "#f26522" },
+        { path: "/crm-sales", label: "CRM & Desking Pipeline", icon: "🎯", count: "128", laneColor: "#f26522" },
       ],
     },
     {
-      group: "Financial & Desk",
+      group: "Catalog & Yard Stock",
+      laneTag: "STOCK LANE",
+      tagColor: "#177ddc",
       items: [
-        { path: "/finance", label: "Finance & Payments", icon: "💳", badge: "Ledger" },
-        { path: "/aftersales", label: "Aftersales, Service & EV", icon: "⚡", badge: "6 Ops" },
+        { path: "/inventory", label: "Model Trims & Yard Bay", icon: "🚗", count: "316", laneColor: "#177ddc" },
+      ],
+    },
+    {
+      group: "Fast Lane & Digital Vault",
+      laneTag: "FAST LANE",
+      tagColor: "#00d2b4",
+      items: [
+        { path: "/orders", label: "Orders & KYC Vault", icon: "📑", count: "42", laneColor: "#00d2b4" },
+      ],
+    },
+    {
+      group: "Menu Lane & F&I",
+      laneTag: "MENU LANE",
+      tagColor: "#ab7ae0",
+      items: [
+        { path: "/finance", label: "F&I Ledger & Loans", icon: "💳", badge: "Finance", laneColor: "#ab7ae0" },
+        { path: "/aftersales", label: "Service, Warranty & EV", icon: "🛠️", badge: "6 Ops", laneColor: "#10b981" },
       ],
     },
     ...((isSuperAdmin || isCompanyAdmin)
       ? [
           {
-            group: "Administration",
+            group: "Enterprise & Security",
+            laneTag: "ADMIN",
+            tagColor: "#94a3b8",
             items: [
-              { path: "/admin-setup", label: "Admin Masters & Tenancy", icon: "🏢", badge: "Config" },
-              { path: "/users", label: "User Access & RBAC", icon: "👥" },
+              { path: "/admin-setup", label: "Dealership Tenancy & Masters", icon: "🏢", badge: "Multi-Org" },
+              { path: "/users", label: "Staff Access & RBAC", icon: "👥" },
             ],
           },
         ]
@@ -90,10 +113,15 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       {/* ── Sidebar ── */}
       <aside className="portal-sidebar">
         <div className="portal-brand">
-          <div className="brand-logo-icon">DOL</div>
+          <div className="brand-logo-icon">
+            <span className="brand-logo-glow" />
+            <span className="brand-logo-text">ODL</span>
+          </div>
           <div className="brand-text">
-            <strong>DealerOneLane</strong>
-            <span>Enterprise Cloud</span>
+            <div className="brand-name-row">
+              <strong>ONE DEALER LANE</strong>
+            </div>
+            <span className="brand-tagline">Connected Dealership OS</span>
           </div>
         </div>
 
@@ -101,22 +129,31 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
         <div className="tenant-badge-card">
           <div className="tenant-status-dot" />
           <div className="tenant-meta">
-            <span className="tenant-title">Apex Motors India</span>
-            <small className="tenant-sub">Mumbai Flagship HQ (MUM-BKC-01)</small>
+            <span className="tenant-title">Apex Powersports Group</span>
+            <small className="tenant-sub">Flagship Campus (MUM-BKC-01)</small>
           </div>
+          <span className="tenant-chip">HQ</span>
         </div>
 
         {/* Navigation Sections */}
         <nav className="portal-nav">
           {navGroups.map((grp) => (
             <div key={grp.group} className="nav-group">
-              <span className="nav-group-title">{grp.group}</span>
+              <div className="nav-group-header">
+                <span className="nav-group-title">{grp.group}</span>
+                {grp.laneTag && (
+                  <span className="lane-tag-pill" style={{ color: grp.tagColor, borderColor: `${grp.tagColor}40` }}>
+                    {grp.laneTag}
+                  </span>
+                )}
+              </div>
               {grp.items.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
                   className={({ isActive }) => `portal-nav-item ${isActive ? "active" : ""}`}
                 >
+                  <span className="nav-item-indicator" style={{ background: item.laneColor || "var(--odl-orange)" }} />
                   <span className="nav-icon">{item.icon}</span>
                   <span className="nav-label">{item.label}</span>
                   {item.badge && <span className="nav-badge">{item.badge}</span>}
@@ -137,7 +174,11 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
             <span className="user-role-tag">{primaryRole}</span>
           </div>
           <button type="button" onClick={handleLogout} className="logout-icon-btn" title="Sign Out">
-            🚪
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
           </button>
         </div>
       </aside>
