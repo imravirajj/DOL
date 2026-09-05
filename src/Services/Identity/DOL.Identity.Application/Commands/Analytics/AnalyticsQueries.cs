@@ -21,9 +21,16 @@ public class GetSalesFunnelQueryHandler : IRequestHandler<GetSalesFunnelQuery, R
 
     public async Task<Result<SalesFunnelDto>> Handle(GetSalesFunnelQuery request, CancellationToken cancellationToken)
     {
-        var quotationsQuery = _context.Quotations.AsNoTracking().Where(q => q.CompanyId == request.CompanyId);
-        var ordersQuery = _context.VehicleOrders.AsNoTracking().Where(o => o.CompanyId == request.CompanyId);
-        var loansQuery = _context.LoanApplications.AsNoTracking().Where(l => l.CompanyId == request.CompanyId);
+        var quotationsQuery = _context.Quotations.AsNoTracking();
+        var ordersQuery = _context.VehicleOrders.AsNoTracking();
+        var loansQuery = _context.LoanApplications.AsNoTracking();
+
+        if (request.CompanyId != Guid.Empty)
+        {
+            quotationsQuery = quotationsQuery.Where(q => q.CompanyId == request.CompanyId);
+            ordersQuery = ordersQuery.Where(o => o.CompanyId == request.CompanyId);
+            loansQuery = loansQuery.Where(l => l.CompanyId == request.CompanyId);
+        }
 
         if (request.BranchId.HasValue)
         {
@@ -70,7 +77,12 @@ public class GetStockAgingQueryHandler : IRequestHandler<GetStockAgingQuery, Res
     {
         var stocksQuery = _context.VehicleStocks.AsNoTracking()
             .Include(s => s.VehicleVariant)
-            .Where(s => s.CompanyId == request.CompanyId && s.Status == VehicleStockStatus.Available);
+            .Where(s => s.Status == VehicleStockStatus.Available);
+
+        if (request.CompanyId != Guid.Empty)
+        {
+            stocksQuery = stocksQuery.Where(s => s.CompanyId == request.CompanyId);
+        }
 
         if (request.BranchId.HasValue)
         {
@@ -123,9 +135,16 @@ public class GetRevenueAnalyticsQueryHandler : IRequestHandler<GetRevenueAnalyti
 
     public async Task<Result<RevenueAnalyticsDto>> Handle(GetRevenueAnalyticsQuery request, CancellationToken cancellationToken)
     {
-        var ordersQuery = _context.VehicleOrders.AsNoTracking().Where(o => o.CompanyId == request.CompanyId);
-        var serviceQuery = _context.ServiceAppointments.AsNoTracking().Where(s => s.CompanyId == request.CompanyId && s.Status == ServiceAppointmentStatus.Completed);
-        var accessoriesQuery = _context.VehicleAccessories.AsNoTracking().Where(a => a.CompanyId == request.CompanyId);
+        var ordersQuery = _context.VehicleOrders.AsNoTracking();
+        var serviceQuery = _context.ServiceAppointments.AsNoTracking().Where(s => s.Status == ServiceAppointmentStatus.Completed);
+        var accessoriesQuery = _context.VehicleAccessories.AsNoTracking();
+
+        if (request.CompanyId != Guid.Empty)
+        {
+            ordersQuery = ordersQuery.Where(o => o.CompanyId == request.CompanyId);
+            serviceQuery = serviceQuery.Where(s => s.CompanyId == request.CompanyId);
+            accessoriesQuery = accessoriesQuery.Where(a => a.CompanyId == request.CompanyId);
+        }
 
         if (request.BranchId.HasValue)
         {

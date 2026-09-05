@@ -140,9 +140,9 @@ export default function DashboardPage() {
     const fetchStats = async () => {
       try {
         const [f, s, r, n] = await Promise.allSettled([
-          analyticsApi.getDashboardFunnel(),
-          analyticsApi.getStockAging(),
-          analyticsApi.getRevenueAnalytics(),
+          analyticsApi.getDashboardFunnel(user?.companyId ?? undefined, user?.branchId ?? undefined),
+          analyticsApi.getStockAging(user?.companyId ?? undefined, user?.branchId ?? undefined),
+          analyticsApi.getRevenueAnalytics(user?.companyId ?? undefined, user?.branchId ?? undefined),
           feedbackApi.getNotifications(),
         ]);
 

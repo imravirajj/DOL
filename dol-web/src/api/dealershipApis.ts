@@ -43,16 +43,34 @@ import type {
 
 // 1. Executive Analytics
 export const analyticsApi = {
-  getDashboardFunnel: async (): Promise<SalesFunnelDto> => {
-    const res = await apiClient.get<SalesFunnelDto>("/analytics/dashboard");
+  getDashboardFunnel: async (companyId?: string, branchId?: string): Promise<SalesFunnelDto> => {
+    const params = new URLSearchParams();
+    if (companyId) params.append("companyId", companyId);
+    if (branchId) params.append("branchId", branchId);
+    const qs = params.toString() ? `?${params.toString()}` : "";
+    const res = await apiClient.get<SalesFunnelDto>(`/analytics/sales-funnel${qs}`, {
+      suppressGlobalError: true,
+    });
     return res.data;
   },
-  getStockAging: async (): Promise<StockAgingDto> => {
-    const res = await apiClient.get<StockAgingDto>("/analytics/inventory-aging");
+  getStockAging: async (companyId?: string, branchId?: string): Promise<StockAgingDto> => {
+    const params = new URLSearchParams();
+    if (companyId) params.append("companyId", companyId);
+    if (branchId) params.append("branchId", branchId);
+    const qs = params.toString() ? `?${params.toString()}` : "";
+    const res = await apiClient.get<StockAgingDto>(`/analytics/stock-aging${qs}`, {
+      suppressGlobalError: true,
+    });
     return res.data;
   },
-  getRevenueAnalytics: async (): Promise<RevenueAnalyticsDto> => {
-    const res = await apiClient.get<RevenueAnalyticsDto>("/analytics/revenue");
+  getRevenueAnalytics: async (companyId?: string, branchId?: string): Promise<RevenueAnalyticsDto> => {
+    const params = new URLSearchParams();
+    if (companyId) params.append("companyId", companyId);
+    if (branchId) params.append("branchId", branchId);
+    const qs = params.toString() ? `?${params.toString()}` : "";
+    const res = await apiClient.get<RevenueAnalyticsDto>(`/analytics/revenue${qs}`, {
+      suppressGlobalError: true,
+    });
     return res.data;
   },
 };
