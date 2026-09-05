@@ -146,8 +146,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (request: LoginRequest) => {
     const response = await loginApi(request);
     setAuthTokens(response.accessToken, response.refreshToken);
-    const currentUser = await getCurrentUser();
-    setUser(currentUser);
+    if (response.user) {
+      setUser(response.user);
+    } else {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    }
     setIsAuthenticated(true);
   };
 
@@ -162,11 +166,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const register = async (request: RegisterRequest) => {
     const response = await registerApi({
       ...request,
-      roleName: "Customer",
+      roleName: request.roleName || "Buyer",
     });
     setAuthTokens(response.accessToken, response.refreshToken);
-    const currentUser = await getCurrentUser();
-    setUser(currentUser);
+    if (response.user) {
+      setUser(response.user);
+    } else {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    }
     setIsAuthenticated(true);
   };
 

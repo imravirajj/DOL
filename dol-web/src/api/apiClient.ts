@@ -21,13 +21,6 @@ interface RetriableRequestConfig
   _retry?: boolean;
 }
 
-interface AuthTokenPayload {
-  accessToken?: string;
-  refreshToken?: string;
-  AccessToken?: string;
-  RefreshToken?: string;
-}
-
 const ACCESS_TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
 
@@ -138,11 +131,12 @@ apiClient.interceptors.response.use(
         }
       );
 
-      const tokens = response.data as AuthTokenPayload;
+      const data = response.data as any;
+      const tokenObj = data?.tokens ?? data?.Tokens;
       const newAccessToken =
-        tokens.accessToken ?? tokens.AccessToken;
+        data?.accessToken ?? data?.AccessToken ?? tokenObj?.accessToken ?? tokenObj?.AccessToken;
       const newRefreshToken =
-        tokens.refreshToken ?? tokens.RefreshToken;
+        data?.refreshToken ?? data?.RefreshToken ?? tokenObj?.refreshToken ?? tokenObj?.RefreshToken;
 
       setAuthTokens(newAccessToken ?? "", newRefreshToken ?? "");
 

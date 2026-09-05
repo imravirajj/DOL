@@ -1,12 +1,5 @@
 import type { AxiosError } from "axios";
 
-interface ApiErrorPayload {
-  error?: string;
-  message?: string;
-  title?: string;
-  errors?: Record<string, string[] | string>;
-}
-
 const statusMessages: Record<number, string> = {
   400: "Please check the submitted details and try again.",
   401: "Please check your credentials and try again.",
@@ -18,10 +11,18 @@ const statusMessages: Record<number, string> = {
 };
 
 const getValidationMessage = (
-  errors: ApiErrorPayload["errors"]
+  errors: any
 ) => {
   if (!errors) {
     return undefined;
+  }
+
+  if (Array.isArray(errors)) {
+    return errors[0];
+  }
+
+  if (typeof errors === "string") {
+    return errors;
   }
 
   const firstError = Object.values(errors)[0];
@@ -30,7 +31,7 @@ const getValidationMessage = (
     return firstError[0];
   }
 
-  return firstError;
+  return firstError as string;
 };
 
 export const getApiErrorMessage = (

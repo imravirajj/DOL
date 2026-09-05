@@ -11,15 +11,22 @@ export interface RegisterRequest {
   roleName?: string;
 }
 
+export interface User {
+  id: string;
+  fullName: string;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  phoneNumber?: string;
+  status?: string;
+  roles?: string[];
+  companyId?: string | null;
+  branchId?: string | null;
+}
+
 export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
   expiresAt?: string;
-}
-
-export interface User {
-  id: string;
-  fullName: string;
-  email: string;
-  roles?: string[];
+  user?: User;
 }
