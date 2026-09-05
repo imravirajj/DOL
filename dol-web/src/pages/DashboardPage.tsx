@@ -195,14 +195,14 @@ export default function DashboardPage() {
             <div className="brand-eyebrow-row">
               <span className="live-pulse-badge">
                 <span className="pulse-dot green" />
-                144 APIs LIVE • v1.0.1
+                DOL • 144 APIs LIVE • v1.0.1
               </span>
               <span className="campus-badge">
                 Apex Powersports Group • Flagship Campus (MUM-BKC-01)
               </span>
             </div>
             <h1 className="desking-main-title">
-              Connected Dealership Operating System
+              Dealer One Lane (DOL) Operating System
             </h1>
             <p className="desking-meta-desc">
               Logged in as <strong>{user?.fullName || "Staff Member"}</strong> ({primaryRole}). Real-time 20-minute deal turnaround desk across Sales Lane, Menu Lane, Fast Lane, and Stock Yard.

@@ -115,11 +115,11 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
         <div className="portal-brand">
           <div className="brand-logo-icon">
             <span className="brand-logo-glow" />
-            <span className="brand-logo-text">ODL</span>
+            <span className="brand-logo-text">DOL</span>
           </div>
           <div className="brand-text">
             <div className="brand-name-row">
-              <strong>ONE DEALER LANE</strong>
+              <strong>DEALER ONE LANE</strong>
             </div>
             <span className="brand-tagline">Connected Dealership OS</span>
           </div>
