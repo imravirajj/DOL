@@ -25,4 +25,11 @@ public interface IIdentityDbContext : IUnitOfWork
     DbSet<VehicleOrder> VehicleOrders { get; }
     DbSet<TestDriveBooking> TestDriveBookings { get; }
     DbSet<DeliveryInspection> DeliveryInspections { get; }
+    DbSet<VehicleTradeIn> VehicleTradeIns { get; }
+    DbSet<VehicleAccessory> VehicleAccessories { get; }
+    DbSet<InsurancePolicy> InsurancePolicies { get; }
+    DbSet<ServiceAppointment> ServiceAppointments { get; }
+    DbSet<CustomerNotification> CustomerNotifications { get; }
+    DbSet<DealershipReview> DealershipReviews { get; }
 }
+

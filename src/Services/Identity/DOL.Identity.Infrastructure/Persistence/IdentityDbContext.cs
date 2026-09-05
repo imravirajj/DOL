@@ -31,8 +31,15 @@ public class IdentityDbContext : DbContext, IIdentityDbContext
     public DbSet<VehicleOrder> VehicleOrders => Set<VehicleOrder>();
     public DbSet<TestDriveBooking> TestDriveBookings => Set<TestDriveBooking>();
     public DbSet<DeliveryInspection> DeliveryInspections => Set<DeliveryInspection>();
+    public DbSet<VehicleTradeIn> VehicleTradeIns => Set<VehicleTradeIn>();
+    public DbSet<VehicleAccessory> VehicleAccessories => Set<VehicleAccessory>();
+    public DbSet<InsurancePolicy> InsurancePolicies => Set<InsurancePolicy>();
+    public DbSet<ServiceAppointment> ServiceAppointments => Set<ServiceAppointment>();
+    public DbSet<CustomerNotification> CustomerNotifications => Set<CustomerNotification>();
+    public DbSet<DealershipReview> DealershipReviews => Set<DealershipReview>();
 
     public IdentityDbContext(DbContextOptions<IdentityDbContext> options, ICurrentUserContext? currentUserContext = null)
+
         : base(options)
     {
         _currentUserContext = currentUserContext;
@@ -232,6 +239,85 @@ public class IdentityDbContext : DbContext, IIdentityDbContext
                     d.BranchId == _currentUserContext.BranchId
                 )
             )
+        );
+
+        // 12. Vehicle Trade-In Isolation:
+        modelBuilder.Entity<VehicleTradeIn>().HasQueryFilter(ti =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                ti.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    ti.BuyerId == _currentUserContext.UserId ||
+                    ti.BranchId == _currentUserContext.BranchId
+                )
+            )
+        );
+
+        // 13. Vehicle Accessory Isolation:
+        modelBuilder.Entity<VehicleAccessory>().HasQueryFilter(va =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            va.CompanyId == _currentUserContext.CompanyId
+        );
+
+        // 14. Insurance Policy Isolation:
+        modelBuilder.Entity<InsurancePolicy>().HasQueryFilter(ip =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                ip.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    ip.BuyerId == _currentUserContext.UserId ||
+                    ip.BranchId == _currentUserContext.BranchId
+                )
+            )
+        );
+
+        // 15. Service Appointment Isolation:
+        modelBuilder.Entity<ServiceAppointment>().HasQueryFilter(sa =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                sa.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    sa.BuyerId == _currentUserContext.UserId ||
+                    sa.BranchId == _currentUserContext.BranchId
+                )
+            )
+        );
+
+        // 16. Customer Notification Isolation:
+        modelBuilder.Entity<CustomerNotification>().HasQueryFilter(cn =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            (
+                cn.CompanyId == _currentUserContext.CompanyId &&
+                (
+                    _currentUserContext.IsCompanyAdmin ||
+                    _currentUserContext.AccessScope == "CompanyLevel" ||
+                    cn.UserId == _currentUserContext.UserId
+                )
+            )
+        );
+
+        // 17. Dealership Review Isolation:
+        modelBuilder.Entity<DealershipReview>().HasQueryFilter(dr =>
+            _currentUserContext == null ||
+            !_currentUserContext.IsAuthenticated ||
+            _currentUserContext.IsGlobalAdmin ||
+            dr.CompanyId == _currentUserContext.CompanyId
         );
     }
 }
