@@ -45,6 +45,93 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
+
+    /* ── Real-Time API Counter Card (Placed directly in Swagger header) ── */
+    .dol-stats-container {
+      margin: 16px 0 14px 0;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      display: inline-block;
+      min-width: 360px;
+      animation: fadeInStats 0.35s ease-out;
+    }
+    @keyframes fadeInStats {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .stats-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 16px;
+    }
+    .stats-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .live-pulse {
+      width: 9px;
+      height: 9px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: liveGlow 2s infinite;
+    }
+    @keyframes liveGlow {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    .stats-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .stats-total {
+      font-size: 1.1rem;
+      font-weight: 800;
+      background: #e0f2fe;
+      color: #0284c7;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      border: 1px solid #bae6fd;
+    }
+    .stats-modules {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .stats-methods {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge-method {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .badge-post { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .badge-get { background: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
+    .badge-put { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .badge-delete { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
   </style>
 </head>
 <body>
@@ -61,6 +148,84 @@
   <script src="https://unpkg.com/swagger-ui-dist@5.18.2/swagger-ui-bundle.js" charset="UTF-8"></script>
   <script src="https://unpkg.com/swagger-ui-dist@5.18.2/swagger-ui-standalone-preset.js" charset="UTF-8"></script>
   <script>
+    function injectApiStats(stats) {
+      const infoSection = document.querySelector('.swagger-ui .info');
+      if (!infoSection) return false;
+
+      let card = document.getElementById('dol-stats-card');
+      if (!card) {
+        card = document.createElement('div');
+        card.id = 'dol-stats-card';
+        card.className = 'dol-stats-container';
+
+        const mainHgroup = infoSection.querySelector('hgroup.main') || infoSection.firstElementChild;
+        if (mainHgroup && mainHgroup.nextSibling) {
+          infoSection.insertBefore(card, mainHgroup.nextSibling);
+        } else {
+          infoSection.appendChild(card);
+        }
+      }
+
+      card.innerHTML = `
+        <div class="stats-top">
+          <div class="stats-main">
+            <span class="live-pulse"></span>
+            <span class="stats-title">Total APIs:</span>
+            <span class="stats-total">${stats.total} APIs</span>
+          </div>
+          <div class="stats-modules">
+            <strong>${stats.modules}</strong> Modules
+          </div>
+        </div>
+        <div class="stats-methods">
+          <span class="badge-method badge-post">POST: <strong>${stats.methods.post || 0}</strong></span>
+          <span class="badge-method badge-get">GET: <strong>${stats.methods.get || 0}</strong></span>
+          <span class="badge-method badge-put">PUT: <strong>${stats.methods.put || 0}</strong></span>
+          <span class="badge-method badge-delete">DELETE: <strong>${stats.methods.delete || 0}</strong></span>
+        </div>
+      `;
+      return true;
+    }
+
+    async function fetchAndRenderStats() {
+      try {
+        const res = await fetch('/swagger/v1/swagger.json');
+        if (!res.ok) return;
+        const data = await res.json();
+        const paths = data.paths || {};
+
+        let total = 0;
+        const methods = { get: 0, post: 0, put: 0, delete: 0 };
+        const tags = new Set();
+
+        for (const path in paths) {
+          for (const m in paths[path]) {
+            const method = m.toLowerCase();
+            if (['get', 'post', 'put', 'delete'].includes(method)) {
+              total++;
+              methods[method] = (methods[method] || 0) + 1;
+              const op = paths[path][m];
+              if (op && op.tags) {
+                op.tags.forEach(t => tags.add(t));
+              }
+            }
+          }
+        }
+
+        const stats = { total, methods, modules: tags.size };
+
+        let attempts = 0;
+        const interval = setInterval(() => {
+          attempts++;
+          if (injectApiStats(stats) || attempts > 40) {
+            clearInterval(interval);
+          }
+        }, 150);
+      } catch (err) {
+        console.error('Failed to load real-time API stats:', err);
+      }
+    }
+
     window.onload = function() {
       window.ui = SwaggerUIBundle({
         url: "/swagger/v1/swagger.json",
@@ -76,6 +241,8 @@
         layout: "BaseLayout",
         persistAuthorization: true
       });
+
+      fetchAndRenderStats();
     };
   </script>
 </body>
