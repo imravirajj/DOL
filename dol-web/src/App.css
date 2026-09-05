@@ -248,6 +248,27 @@
   color: #ffffff;
 }
 
+.odl-header-signin-link {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+}
+
+.odl-header-signin-link:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
 .odl-btn-glass-pill {
   display: inline-flex;
   align-items: center;
@@ -1050,6 +1071,89 @@
   display: block;
   font-size: 10px;
   color: #94a3b8;
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* ── Dedicated Login Page (/login) ── */
+/* ═════════════════════════════════════════════════════════════════ */
+.odl-landing-wrapper.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.login-dedicated-container {
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  margin: auto;
+}
+
+.login-brand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.login-brand-header a {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-brand-header a:hover {
+  transform: scale(1.05);
+}
+
+.login-tagline {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+}
+
+.dedicated-login-card {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(13, 20, 36, 0.94);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.75),
+    0 0 40px rgba(242, 101, 34, 0.12);
+}
+
+.login-card-footer {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.login-card-footer .text-link {
+  color: #cbd5e1;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.login-card-footer .text-link:hover {
+  color: #f26522;
 }
 
 /* ═════════════════════════════════════════════════════════════════ */
