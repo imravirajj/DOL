@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DOL.Identity.API.Controllers;
 
-[Route("api/[controller]")]
-[Route("api/companies")]
 public class CompanyController : ApiControllerBase
 {
     [HttpPost("register")]

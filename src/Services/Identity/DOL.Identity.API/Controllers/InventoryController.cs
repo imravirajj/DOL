@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DOL.Identity.API.Controllers;
 
-[Route("api/[controller]")]
-[Route("api/inventory")]
 [Authorize]
 public class InventoryController : ApiControllerBase
 {

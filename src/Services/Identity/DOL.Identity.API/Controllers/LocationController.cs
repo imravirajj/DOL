@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DOL.Identity.API.Controllers;
 
-[Route("api/[controller]")]
-[Route("api/locations")]
 [Authorize]
 public class LocationController : ApiControllerBase
 {

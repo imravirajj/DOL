@@ -33,6 +33,9 @@ builder.Services.AddCors(options =>
 // Health Checks
 builder.Services.AddHealthChecks();
 
+// Configure clean lowercase routing
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
