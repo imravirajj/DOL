@@ -42,7 +42,7 @@ builder.Services.AddEndpointsApiExplorer();
 // Swagger with JWT Security Definition
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "DOL", Version = "v1" });
+    c.SwaggerDoc("v1.0.1", new OpenApiInfo { Title = "DOL", Version = "v1.0.1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -96,7 +96,7 @@ app.UseStaticFiles();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DOL Platform API v1");
+    c.SwaggerEndpoint("/swagger/v1.0.1/swagger.json", "DOL Platform API v1.0.1");
     c.RoutePrefix = "swagger";
 });
 
